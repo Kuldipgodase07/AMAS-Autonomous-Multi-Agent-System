@@ -1,0 +1,173 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * AMAS Design System — Enterprise dark command console.
+ * All colors in oklch. Accent inspired by NVIDIA green (#76B900).
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-critical: var(--critical);
+  --color-info: var(--info);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-hairline: var(--hairline);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Dark-first: these ARE the defaults */
+  --background: oklch(0.17 0.015 145);       /* Very dark, subtle green */
+  --foreground: oklch(0.97 0.01 145);        
+  --surface: oklch(0.20 0.03 145);           /* Complete dark green */
+  --surface-elevated: oklch(0.23 0.03 145);  /* Slightly lighter dark green */
+  --card: oklch(0.20 0.03 145);
+  --card-foreground: oklch(0.97 0.01 145);
+  --popover: oklch(0.20 0.03 145);
+  --popover-foreground: oklch(0.97 0.01 145);
+
+  --primary: oklch(0.75 0.19 130);           /* NVIDIA green #76B900 */
+  --primary-foreground: oklch(0.15 0.02 165);
+  --primary-glow: oklch(0.82 0.21 130);
+
+  --secondary: oklch(0.30 0.008 165);
+  --secondary-foreground: oklch(0.97 0.004 165);
+  --muted: oklch(0.26 0.008 165);
+  --muted-foreground: oklch(0.68 0.008 165); /* #9BA6A1 */
+  --accent: oklch(0.32 0.02 150);
+  --accent-foreground: oklch(0.97 0.004 165);
+
+  --success: oklch(0.80 0.16 165);           /* #3DDC97 */
+  --warning: oklch(0.80 0.15 75);            /* #F5B942 */
+  --critical: oklch(0.65 0.22 25);           /* #E5484D */
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.97 0.004 165);
+  --info: oklch(0.72 0.13 220);
+
+  --border: oklch(0.32 0.008 165);           /* #232B28 */
+  --hairline: oklch(0.28 0.008 165);
+  --input: oklch(0.30 0.008 165);
+  --ring: oklch(0.75 0.19 130);
+
+  --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-glow));
+  --gradient-surface: linear-gradient(180deg, var(--surface-elevated), var(--surface));
+  --shadow-glow: 0 0 24px -4px color-mix(in oklab, var(--primary) 45%, transparent);
+  --shadow-panel: 0 8px 32px -12px oklch(0 0 0 / 0.6);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background-color: var(--color-background);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-primary) 35%, transparent);
+    color: var(--color-foreground);
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-background); }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 6px;
+    border: 2px solid var(--color-background);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-muted-foreground); }
+}
+
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--color-border) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-border) 40%, transparent) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@utility status-dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 3px color-mix(in oklab, currentColor 20%, transparent);
+}
+
+@utility panel {
+  background: var(--gradient-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.8; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+@keyframes edge-flow {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes slide-in-top {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@utility animate-pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+@utility animate-edge-flow {
+  stroke-dasharray: 6 6;
+  animation: edge-flow 1.2s linear infinite;
+}
+@utility animate-slide-in-top {
+  animation: slide-in-top 0.35s ease-out;
+}
